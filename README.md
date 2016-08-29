@@ -47,6 +47,7 @@ Install raccoon_notifier:
 
 Include at ```requirements.txt```:
 ```python
+git+https://github.com/devraccoon/raccoon_notifier
 git+https://github.com/devraccoon/raccoon_log
 ```
 #### setup.py

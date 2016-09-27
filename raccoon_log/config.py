@@ -61,7 +61,7 @@ def _get_log_level(max_level):
 
 
 def config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTANT", compress=True, develop=False,
-               send_email=False, to_emails=None, from_email=None, pwd=None,
+               format_pattern=None, send_email=False, to_emails=None, from_email=None, pwd=None,
                send_sms=False, to_phones=None, auth_id=None, auth_token=None):
     """
     Configure log using a default pattern and create a new level (important).
@@ -73,6 +73,7 @@ def config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTA
         max_level: max level of log;
         compress: indicates if compress the logs or no;
         develop: set output from logging.important to standard ouput (normal print);
+        format_pattern: Set pattern to log output
         send_email: boolean to activate or not alert by Email on CRITICAL, ERROR or NOTIFY leve.;
         to_emails (needed if send_email is True): list of emails to receive alert;
         from_email (needed if send_email is True): email used to send email alert;
@@ -96,13 +97,13 @@ def config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTA
     if send_sms:
         sms_handler = SendSMS(log_name, to_phones, auth_id, auth_token)
 
-    _set_logger(directory, log_name, _get_log_level(max_level), develop, email_handler, sms_handler)
+    _set_logger(directory, log_name, _get_log_level(max_level), develop, email_handler, sms_handler, format_pattern)
 
     if compress and not develop:
         _clean_up_logs(directory, log_name, end_with, max_files_uncompressed)
 
 
-def _set_logger(directory, name, level, develop, email_handler, sms_handler):
+def _set_logger(directory, name, level, develop, email_handler, sms_handler, format_pattern):
     """
     Set the log pattern using default configs.
 
@@ -117,7 +118,9 @@ def _set_logger(directory, name, level, develop, email_handler, sms_handler):
     now = datetime.now().strftime('%Y_%m_%d')
     log_path = '{}/{}_{}.log'.format(directory, name, now)
 
-    format_pattern = '[%(asctime)s.%(msecs)d] - %(levelname)s: %(message)s'
+    if format_pattern is None:
+        format_pattern = '[%(asctime)s.%(msecs)d] - %(levelname)s: %(message)s'
+
     date_format = '%Y-%m-%d %H:%M:%S'
 
     if develop:

@@ -71,12 +71,12 @@ Run only in the main scipt
 ```python
 from raccoon_log.config import config_log
 
-config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTANT", compress=True, develop=False, send_email=True, to_emails=['example@gmail.com'], from_email='example@gmail.com', pwd='pwd_example', send_sms=True, to_phones=['5516111111111'], auth_id='EXAMPLEID', auth_token='EXAMPLETOKEN')
+config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTANT", compress=True, develop=False, format_pattern=None, send_email=True, to_emails=['example@gmail.com'], from_email='example@gmail.com', pwd='pwd_example', send_sms=True, to_phones=['5516111111111'], auth_id='EXAMPLEID', auth_token='EXAMPLETOKEN')
 ```
 
 #### config_log arguments
 
-> config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTANT", compress=True, develop=False,
+> config_log(directory, log_name, max_files_uncompressed=1, max_level="IMPORTANT", compress=True, develop=False, format_pattern=None,
 send_email=True, to_emails=['example@gmail.com'], from_email='example@gmail.com', pwd='pwd_example',
 send_sms=True, to_phones=['5516111111111'], auth_id='EXAMPLEID', auth_token='EXAMPLETOKEN'
 )
@@ -87,6 +87,7 @@ send_sms=True, to_phones=['5516111111111'], auth_id='EXAMPLEID', auth_token='EXA
 * **max_level** (optional, default='IMPORTANT'): max log level. Accept numbers (0 - 50)
 * **compress** (optional, default=True) compress old log files to a .tar
 * :new: **develop** (optional, default=False): set output from logging.important to standard ouput (normal print)
+* **format_pattern**(optional, default=None): Set format pattern for message output. If no format is passed the default format is ```[YYYY-MM-DD hh:mm:ss] - LEVEL: message```
 * :new: **send_email** (optional, default=False): boolean to activate or not alert by Email on CRITICAL, ERROR or NOTIFY level.
 * **to_emails** (needed if send_email is True): list of emails to receive alerts.
 * **from_email** (needed if send_email is True): email used to send email alert.
